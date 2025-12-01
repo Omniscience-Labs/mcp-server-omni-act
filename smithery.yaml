@@ -1,0 +1,65 @@
+# Smithery configuration file: https://smithery.ai/docs/build/project-config
+
+build:
+  dockerBuildPath: browserbase
+startCommand:
+  type: stdio
+  commandFunction:
+    # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
+    |-
+    config => ({
+      command: 'node',
+      args: ['cli.js'],
+      env: {
+        BROWSERBASE_API_KEY: config.browserbaseApiKey,
+        BROWSERBASE_PROJECT_ID: config.browserbaseProjectId
+      }
+    })
+  configSchema:
+    # JSON Schema defining the configuration options for the MCP.
+    type: object
+    required:
+      - browserbaseApiKey
+      - browserbaseProjectId
+    properties:
+      browserbaseApiKey:
+        type: string
+        description: The API key for Browserbase.
+      browserbaseProjectId:
+        type: string
+        description: The project ID for Browserbase.
+      port:
+        type: number
+        description: The port to listen on.
+      host:
+        type: string
+        description: The host to listen on.
+      contextId:
+        type: string
+        description: The context ID to use for the session.
+      persist:
+        type: boolean
+        description: Whether to persist the context.
+      proxies:
+        type: boolean
+        description: Whether to use proxies.
+      cookies:
+        type: object
+        description: Cookies to use for the session.
+      browserWidth:
+        type: number
+        description: Width of the browser window.
+      browserHeight:
+        type: number
+        description: Height of the browser window.
+  exampleConfig:
+    browserbaseApiKey: sk_test_1234567890abcdef
+    browserbaseProjectId: proj_ABC123XYZ
+    port: 3000
+    host: 0.0.0.0
+    contextId: test-context
+    persist: false
+    proxies: false
+    cookies: {}
+    browserWidth: 1280
+    browserHeight: 800
